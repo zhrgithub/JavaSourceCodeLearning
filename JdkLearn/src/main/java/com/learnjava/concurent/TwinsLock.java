@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Lock;
 /**
  *
  * 同时有两个线程获取锁
- *
+ *ce
  * @author LuoHaiYang
  */
 public class TwinsLock implements Lock {
