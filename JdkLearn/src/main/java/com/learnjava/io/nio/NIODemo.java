@@ -23,6 +23,7 @@ public class NIODemo {
 
         // 如何从buffe读取数据
         // 将buffer转换，读写切换（！！！）
+        //通过flip方法把游标放到0，设置数组的大小limit为实际的容量大小，设置标记为-1
         intBuffer.flip();
 
         while (intBuffer.hasRemaining()) {
