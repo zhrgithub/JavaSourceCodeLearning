@@ -8,6 +8,7 @@ import java.util.concurrent.locks.Lock;
 /**
  *
  * 同时有两个线程获取锁
+ * 测试
  *
  * @author LuoHaiYang
  */
