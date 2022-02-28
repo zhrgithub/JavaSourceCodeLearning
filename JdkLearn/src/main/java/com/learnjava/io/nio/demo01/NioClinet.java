@@ -1,9 +1,10 @@
 package com.learnjava.io.nio.demo01;
 
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Date;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 
 /**
@@ -15,23 +16,25 @@ public class NioClinet {
     public static void main(String[] args) throws Exception {
 
         // 获取通道
-        SocketChannel channel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 9999));
+        SocketChannel channel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 9000));
+
+        System.out.println("创建selector之前");
+
+
+        Selector selector = Selector.open();
         // 切换至非阻塞模式
         channel.configureBlocking(false);
-        // 分配缓冲区大小
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
 
         Scanner scan = new Scanner(System.in);
 
-        while (scan.hasNext()) {
-            String next = scan.next();
-            // 向缓冲区里写入数据
-            buffer.put( (new Date().toString() + "\n" + next).getBytes());
-            buffer.flip();
+        channel.register(selector, SelectionKey.OP_READ);
 
-            // 向通道里写入带有数据的缓冲区对象， 表示向服务器发送数据
-            channel.write( buffer);
-            buffer.clear();
+        while (scan.hasNext()) {
+            String next = scan.nextLine();
+            // 向缓冲区里写入数据
+            if (next!=null&&next.length()>0){
+                channel.write(Charset.forName("UTF-8").encode(next));
+            }
         }
 
         // 关闭通道

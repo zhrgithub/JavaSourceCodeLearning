@@ -1,4 +1,4 @@
-package com.learnjava.io.nio;
+package com.learnjava.io.nio.demo03;
 
 import io.netty.buffer.ByteBuf;
 
@@ -15,7 +15,7 @@ public class ScatteringAndGatheringTest {
         // ServerSocketChannel 、 SocketChannel
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
-        InetSocketAddress inetSocketAddress = new InetSocketAddress(7000);
+        InetSocketAddress inetSocketAddress = new InetSocketAddress(8099);
 
         serverSocketChannel.socket().bind(inetSocketAddress);
 

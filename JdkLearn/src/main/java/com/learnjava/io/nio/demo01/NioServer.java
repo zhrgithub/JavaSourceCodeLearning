@@ -1,5 +1,6 @@
 package com.learnjava.io.nio.demo01;
 
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -13,16 +14,30 @@ import java.util.Iterator;
  */
 public class NioServer {
     public static void main(String[] args) throws Exception {
-        // 获取服务端通道
-        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-        // 切换为非阻塞模式
-        serverSocketChannel.configureBlocking(false);
+
         // 绑定链接
         Selector selector = Selector.open();
+
+        // 获取服务端通道
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+
+        serverSocketChannel.bind(new InetSocketAddress(9000));
+
+        // 切换为非阻塞模式
+        serverSocketChannel.configureBlocking(false);
+
         // 将通道注册在selector上，并绑定为读事件
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+
         // 选择器轮训，阻塞
-        while (selector.select() > 0) {
+        for (;;) {
+
+            int readyChannels = selector.select();
+
+            System.out.println("进入");
+
+            if(readyChannels == 0) continue;
+
             Iterator<SelectionKey> it = selector.selectedKeys().iterator();
 
             // 判断是否有事件进来

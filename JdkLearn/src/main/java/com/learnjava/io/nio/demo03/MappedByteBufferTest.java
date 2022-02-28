@@ -1,4 +1,4 @@
-package com.learnjava.io.nio;
+package com.learnjava.io.nio.demo03;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +13,7 @@ import java.nio.channels.FileChannel;
 public class MappedByteBufferTest {
     public static void main(String[] args) throws Exception {
 
-        RandomAccessFile randomAccessFile = new RandomAccessFile("1.txt", "rw");
+        RandomAccessFile randomAccessFile = new RandomAccessFile("/Users/zhr/Downloads/1.txt", "rw");
 
         // get channel
         FileChannel channel = randomAccessFile.getChannel();
@@ -24,7 +24,7 @@ public class MappedByteBufferTest {
         mappedByteBuffer.put(3, (byte) '9');
 
         // IndexOutOfBoundsException
-        mappedByteBuffer.put(5, (byte) 'Y');
+        mappedByteBuffer.put(4, (byte) 'Y');
 
         randomAccessFile.close();
         System.out.println("change success");
