@@ -1,4 +1,4 @@
-package com.learnjava.io.aio;
+package com.learnjava.io.aio.demo01;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousFileChannel;
@@ -12,6 +12,7 @@ public  class WriteToFile {
         AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(
                 Paths.get("/Users/zhr/Downloads/a.txt"), StandardOpenOption.READ,
                 StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+
         CompletionHandler<Integer, Object> handler = new CompletionHandler<Integer, Object>() {
 
             @Override
