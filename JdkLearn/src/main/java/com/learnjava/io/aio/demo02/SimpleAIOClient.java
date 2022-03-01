@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
+import java.nio.charset.Charset;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -24,9 +25,10 @@ public class SimpleAIOClient {
                         client.write(ByteBuffer.wrap("From client:Hello i am client".getBytes()))
                                 .get();
                         ByteBuffer readBuffer = ByteBuffer.allocate(128);
-                        // 阻塞等待接收服务端数据
-                        client.read(readBuffer).get();
-                        System.out.println(new String(readBuffer.array()));
+                        // 阻塞等待接收服务端数据,可以用来接收服务器发过来的文件
+                       Integer length =  client.read(readBuffer).get();
+                        System.out.println(new String(readBuffer.array(),
+                                0,length, Charset.forName("UTF-8")));
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
