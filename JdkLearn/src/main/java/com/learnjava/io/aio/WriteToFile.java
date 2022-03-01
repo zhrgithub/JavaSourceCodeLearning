@@ -10,7 +10,7 @@ public  class WriteToFile {
 
     public static void main(String[] args) throws Exception {
         AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(
-                Paths.get("/asynchronous.txt"), StandardOpenOption.READ,
+                Paths.get("/Users/zhr/Downloads/a.txt"), StandardOpenOption.READ,
                 StandardOpenOption.WRITE, StandardOpenOption.CREATE);
         CompletionHandler<Integer, Object> handler = new CompletionHandler<Integer, Object>() {
 

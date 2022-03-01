@@ -19,7 +19,7 @@ public class ReadFromFile {
         while (!result.isDone()) {
             ProfitCalculator.calculateTax();
         }
-        //文本总共被读取了多少个字节
+        //读取完成，通知：文本总共被读取了多少个字节
         Integer bytesRead = result.get();
         System.out.println("Bytes read [" + bytesRead + "]");
     }
