@@ -11,6 +11,10 @@ import io.netty.channel.socket.oio.OioServerSocketChannel;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 
+/**
+ * @author zhr_java@163.com
+ * @date 2022/3/4 13:17
+ */
 public class NettyOioServer {
 
     public void server(int port) throws Exception {

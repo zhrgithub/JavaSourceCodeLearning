@@ -12,7 +12,9 @@ import java.nio.charset.Charset;
 import java.util.Scanner;
 
 /**
- * @author zhrgithub
+ * @author zhr_java@163.com
+ * @date 2022/3/4 13:17
+ *
  * NIO客户端
  */
 

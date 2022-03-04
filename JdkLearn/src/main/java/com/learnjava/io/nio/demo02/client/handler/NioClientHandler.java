@@ -10,6 +10,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
+ * @author zhr_java@163.com
+ * @date 2022/3/4 13:17
+ *
  * 客户端线程类，专门接收服务器端响应信息
  */
 public class NioClientHandler implements Runnable {
