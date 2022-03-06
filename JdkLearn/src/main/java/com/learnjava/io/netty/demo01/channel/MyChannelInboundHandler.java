@@ -14,7 +14,7 @@ import io.netty.channel.ChannelInboundHandler;
 public class MyChannelInboundHandler implements ChannelInboundHandler {
     @Override
     public void channelRegistered(ChannelHandlerContext channelHandlerContext) throws Exception {
-
+        channelHandlerContext.fireChannelRegistered();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MyChannelInboundHandler implements ChannelInboundHandler {
 
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
-
+        channelHandlerContext.fireChannelRead(o);
     }
 
     @Override
