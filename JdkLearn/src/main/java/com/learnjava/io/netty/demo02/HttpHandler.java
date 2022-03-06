@@ -35,7 +35,7 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> { 
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         System.out.println("channelReadComplete");
         super.channelReadComplete(ctx);
-        ctx.flush(); // 4
+        ctx.flush(); //
     }
 
     @Override
