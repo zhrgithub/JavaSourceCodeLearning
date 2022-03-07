@@ -17,46 +17,65 @@ public class MyChannelOutboundHandler implements ChannelOutboundHandler {
       ChannelHandlerContext channelHandlerContext,
       SocketAddress socketAddress,
       ChannelPromise channelPromise)
-      throws Exception {}
+      throws Exception {
+    channelHandlerContext.bind(socketAddress, channelPromise);
+  }
 
   @Override
   public void connect(
       ChannelHandlerContext channelHandlerContext,
       SocketAddress socketAddress,
-      SocketAddress socketAddress1,
+      SocketAddress localAddress,
       ChannelPromise channelPromise)
-      throws Exception {}
+      throws Exception {
+    channelHandlerContext.connect(localAddress, channelPromise);
+  }
 
   @Override
   public void disconnect(ChannelHandlerContext channelHandlerContext, ChannelPromise channelPromise)
-      throws Exception {}
+      throws Exception {
+    channelHandlerContext.disconnect(channelPromise);
+  }
 
   @Override
   public void close(ChannelHandlerContext channelHandlerContext, ChannelPromise channelPromise)
-      throws Exception {}
+      throws Exception {
+    channelHandlerContext.close(channelPromise);
+  }
 
   @Override
   public void deregister(ChannelHandlerContext channelHandlerContext, ChannelPromise channelPromise)
-      throws Exception {}
+      throws Exception {
+    channelHandlerContext.deregister(channelPromise);
+  }
 
   @Override
-  public void read(ChannelHandlerContext channelHandlerContext) throws Exception {}
+  public void read(ChannelHandlerContext channelHandlerContext) throws Exception {
+    System.out.println("coming in MyChannelOutboundHandler");
+  }
 
   @Override
   public void write(
       ChannelHandlerContext channelHandlerContext, Object o, ChannelPromise channelPromise)
-      throws Exception {}
+      throws Exception {
+    channelHandlerContext.write(o, channelPromise);
+  }
 
   @Override
-  public void flush(ChannelHandlerContext channelHandlerContext) throws Exception {}
+  public void flush(ChannelHandlerContext channelHandlerContext) throws Exception {
+    channelHandlerContext.flush();
+  }
 
   @Override
-  public void handlerAdded(ChannelHandlerContext channelHandlerContext) throws Exception {}
+  public void handlerAdded(ChannelHandlerContext channelHandlerContext) throws Exception {
+  }
 
   @Override
   public void handlerRemoved(ChannelHandlerContext channelHandlerContext) throws Exception {}
 
   @Override
   public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable throwable)
-      throws Exception {}
+      throws Exception {
+    channelHandlerContext.fireExceptionCaught(throwable);
+  }
 }
