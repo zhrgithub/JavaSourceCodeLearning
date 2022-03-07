@@ -27,8 +27,10 @@ public class ServerSocket {
         // 也就是说同一时刻一个NioEventLoop处理一个channel；NioEventLoop相当于一个线程处理一个队列里面的数据
         .channel(NioServerSocketChannel.class)
         // 设置服务端管道的连接配置参数，根据名称返回对应的操作类型，并且设置对应的属性值
-        .option(ChannelOption.SO_BACKLOG, 1024) //
-        .childOption(ChannelOption.SO_KEEPALIVE, true)
+        .option(ChannelOption.SO_BACKLOG, 1024) // option()用于NioServerSocketChannel接受传入连接的
+        .childOption(
+            ChannelOption.SO_KEEPALIVE,
+            true) // childOption() 用于父 ServerChannel 接受的 Channels，在本例中为 NioSocketChannel。
         .childOption(ChannelOption.TCP_NODELAY, true)
         // 对客户端的管道进行拦截处理，配置入站、出站事件handler（规则：firt in last out）
         .childHandler(
