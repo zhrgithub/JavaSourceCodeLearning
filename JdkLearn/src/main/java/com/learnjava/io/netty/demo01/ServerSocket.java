@@ -84,7 +84,6 @@ public class ServerSocket {
       workerGroup.shutdownGracefully();
     }
   }
-  ;
 
   public static void main(String[] args) throws InterruptedException {
     ServerSocket serverSocket = new ServerSocket(8080);

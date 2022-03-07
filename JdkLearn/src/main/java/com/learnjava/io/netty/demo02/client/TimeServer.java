@@ -1,4 +1,4 @@
-package com.learnjava.io.netty.demo02;
+package com.learnjava.io.netty.demo02.client;
 
 import com.learnjava.io.netty.demo02.channel.TimeServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -13,14 +13,13 @@ import java.util.Date;
 
 /**
  * @author zhr_java@163.com
- * @date 2022/3/7 17:53
- *     <p>用于实现socketServer服务器
+ * @date 2022/3/7 21:16
  */
-public class ServerSocket {
+public class TimeServer {
   // 绑定端口
   private int port = 8080;
 
-  public ServerSocket(int port) {
+  public TimeServer(int port) {
     this.port = port;
   }
 
@@ -84,10 +83,9 @@ public class ServerSocket {
       workerGroup.shutdownGracefully();
     }
   }
-  ;
 
-  public static void main(String[] args) throws InterruptedException {
-    ServerSocket serverSocket = new ServerSocket(8080);
-    serverSocket.run();
+  public static void main(String[] args) {
+      TimeServer timeServer = new TimeServer(8080);
+      timeServer.run();
   }
 }
