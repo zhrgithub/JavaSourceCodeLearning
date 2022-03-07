@@ -21,17 +21,19 @@ public class ReadFromFile {
         }
         //读取完成，通知：文本总共被读取了多少个字节
         Integer bytesRead = result.get();
-        String str = new String(buffer.array(),0,bytesRead);
-        System.out.println("Bytes read [" + bytesRead + "]"+"fileText:"+str);
+        String str = new String(buffer.array(), 0, bytesRead);
+        System.out.println("Bytes read [" + bytesRead + "]" + "fileText:" + str);
     }
 }
+
 class ProfitCalculator {
     public ProfitCalculator() {
         System.out.println("Profit Calculator completed !!!");
     }
+
     public static void calculateTax() {
         System.out.println("计算税务完毕");
     }
+
+
 }
-
-

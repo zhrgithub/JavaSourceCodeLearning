@@ -6,7 +6,7 @@ import java.nio.channels.CompletionHandler;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public  class WriteToFile {
+public class WriteToFile {
 
     public static void main(String[] args) throws Exception {
         AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(
@@ -38,4 +38,3 @@ public  class WriteToFile {
 
     }
 }
-
