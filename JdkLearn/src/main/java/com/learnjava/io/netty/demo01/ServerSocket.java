@@ -10,6 +10,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.Date;
 
+/**
+ * @author zhr_java@163.com
+ * @date 2022/3/7 17:53
+ *     <p>用于实现socketServer服务器
+ */
 public class ServerSocket {
 
   public static void main(String[] args) {
