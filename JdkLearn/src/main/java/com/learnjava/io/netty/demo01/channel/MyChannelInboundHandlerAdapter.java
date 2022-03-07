@@ -1,9 +1,7 @@
 package com.learnjava.io.netty.demo01.channel;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.ReferenceCountUtil;
 
 import java.util.List;
 
