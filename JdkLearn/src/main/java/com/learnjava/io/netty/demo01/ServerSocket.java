@@ -25,12 +25,14 @@ public class ServerSocket {
   }
 
   public void run() {
-    // 创建mainReactor
-    NioEventLoopGroup bossGroup = new NioEventLoopGroup();
-    // 创建工作线程组
-    NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+    // 当前是主从Rector的多线程模式
+    // 创建mainReactor，根据需要设置接收连接的线程池的大小，这里默认是1（支持的并发量在一千左右），最大不超过Integer.MAX_VALUE
+    NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
+    // 创建工作线程组,根据需要设置数据处理的线程池的大小，这里默认是10（支持的并发量在一万左右），最大不超过Integer.MAX_VALUE
+    NioEventLoopGroup workerGroup = new NioEventLoopGroup(10);
 
     try {
+      // 服务器端的启动引导
       final ServerBootstrap serverBootstrap = new ServerBootstrap();
       serverBootstrap
 
@@ -52,9 +54,9 @@ public class ServerSocket {
                   // I/O 操作。
                   // ChannelDuplexHandler 用于处理入站和出站事件。
                   // 入栈顺序：1、2、5；出栈顺序：5、4、3
-                  ch.pipeline().addLast("1",new MyChannelInboundHandler());
-                  // ch.pipeline().addLast("2", new MyChannelInboundHandlerAdapter());
-//                  ch.pipeline().addLast("3", new MyChannelOutboundHandler());
+                  //                  ch.pipeline().addLast("1",new MyChannelInboundHandler());
+                  ch.pipeline().addLast("2", new MyChannelInboundHandlerAdapter());
+                  //                  ch.pipeline().addLast("3", new MyChannelOutboundHandler());
                   // ch.pipeline().addLast("4", new MyChannelOutboundHandlerAdapter());
                   // ch.pipeline().addLast("5", new MyChannelDuplexHandler());
                 }
@@ -66,6 +68,7 @@ public class ServerSocket {
               true) // childOption() 用于父 ServerChannel 接受的 Channels，在本例中为 NioSocketChannel。
           .childOption(ChannelOption.TCP_NODELAY, true);
 
+      // 可以对返回是ChannelFuture的对象添加监听
       ChannelFuture future =
           serverBootstrap
               .bind(port)
@@ -80,16 +83,16 @@ public class ServerSocket {
                   });
       future.channel().closeFuture().sync();
     } catch (InterruptedException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     } finally {
-        bossGroup.shutdownGracefully();
-        workerGroup.shutdownGracefully();
+      bossGroup.shutdownGracefully();
+      workerGroup.shutdownGracefully();
     }
   }
   ;
 
   public static void main(String[] args) throws InterruptedException {
-      ServerSocket serverSocket = new ServerSocket(8080);
-      serverSocket.run();
+    ServerSocket serverSocket = new ServerSocket(8080);
+    serverSocket.run();
   }
 }

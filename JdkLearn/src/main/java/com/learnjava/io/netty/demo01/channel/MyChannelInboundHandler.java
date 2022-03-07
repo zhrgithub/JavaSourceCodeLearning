@@ -43,6 +43,8 @@ public class MyChannelInboundHandler implements ChannelInboundHandler {
     } finally {
       ReferenceCountUtil.release(o); // (2)
     }
+//    channelHandlerContext.write("323232");
+//    channelHandlerContext.flush();
   }
 
   @Override
