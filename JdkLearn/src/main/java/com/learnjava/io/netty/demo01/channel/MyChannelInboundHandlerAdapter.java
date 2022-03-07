@@ -38,8 +38,16 @@ public class MyChannelInboundHandlerAdapter extends ChannelInboundHandlerAdapter
                 future.cause();
               }
             });
+    // 查看所有的管道
     List<String> names = ctx.pipeline().names();
-    names.stream().forEach(name -> System.out.println("管道名称:"+name));
+    names.stream().forEach(name -> System.out.println("管道名称:" + name));
     ctx.flush();
+  }
+
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    // 引发异常的时候及时关闭
+    cause.printStackTrace();
+    ctx.close();
   }
 }
