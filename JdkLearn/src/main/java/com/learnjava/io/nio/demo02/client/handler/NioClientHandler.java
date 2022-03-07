@@ -12,101 +12,73 @@ import java.util.Set;
 /**
  * @author zhr_java@163.com
  * @date 2022/3/4 13:17
- *
- * 客户端线程类，专门接收服务器端响应信息
+ *     <p>客户端线程类，专门接收服务器端响应信息
  */
 public class NioClientHandler implements Runnable {
-    private Selector selector;
+  private Selector selector;
 
-    public NioClientHandler(Selector selector) {
-        this.selector = selector;
+  public NioClientHandler(Selector selector) {
+    this.selector = selector;
+  }
+
+  @Override
+  public void run() {
+
+    try {
+      for (; ; ) {
+        int readyChannels = selector.select();
+
+        if (readyChannels == 0) continue;
+
+        /** 获取可用channel的集合 */
+        Set<SelectionKey> selectionKeys = selector.selectedKeys();
+
+        Iterator iterator = selectionKeys.iterator();
+
+        while (iterator.hasNext()) {
+          /** selectionKey实例 */
+          SelectionKey selectionKey = (SelectionKey) iterator.next();
+
+          /** **移除Set中的当前selectionKey** */
+          iterator.remove();
+
+          /** 7. 根据就绪状态，调用对应方法处理业务逻辑 */
+
+          /** 如果是 可读事件 */
+          if (selectionKey.isReadable()) {
+            readHandler(selectionKey, selector);
+          }
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /** 可读事件处理器 */
+  private void readHandler(SelectionKey selectionKey, Selector selector) throws IOException {
+    /** 要从 selectionKey 中获取到已经就绪的channel */
+    SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
+
+    /** 创建 buffer */
+    ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+
+    /** 循环读取服务器端响应信息 */
+    String response = "";
+    while (socketChannel.read(byteBuffer) > 0) {
+      /** 切换buffer为读模式 */
+      byteBuffer.flip();
+
+      /** 读取buffer中的内容 */
+      response += Charset.forName("UTF-8").decode(byteBuffer);
     }
 
-    @Override
-    public void run() {
+    /** 将channel再次注册到selector上，监听他的可读事件 */
+    socketChannel.register(selector, SelectionKey.OP_READ);
 
-        try {
-            for (;;) {
-                int readyChannels = selector.select();
-
-                if (readyChannels == 0) continue;
-
-                /**
-                 * 获取可用channel的集合
-                 */
-                Set<SelectionKey> selectionKeys = selector.selectedKeys();
-
-                Iterator iterator = selectionKeys.iterator();
-
-                while (iterator.hasNext()) {
-                    /**
-                     * selectionKey实例
-                     */
-                    SelectionKey selectionKey = (SelectionKey) iterator.next();
-
-                    /**
-                     * **移除Set中的当前selectionKey**
-                     */
-                    iterator.remove();
-
-                    /**
-                     * 7. 根据就绪状态，调用对应方法处理业务逻辑
-                     */
-
-                    /**
-                     * 如果是 可读事件
-                     */
-                    if (selectionKey.isReadable()) {
-                        readHandler(selectionKey, selector);
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    /** 将服务器端响应信息打印到本地 */
+    if (response.length() > 0) {
+      System.out.println(response);
     }
-
-    /**
-     * 可读事件处理器
-     */
-    private void readHandler(SelectionKey selectionKey, Selector selector)
-            throws IOException {
-        /**
-         * 要从 selectionKey 中获取到已经就绪的channel
-         */
-        SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
-
-        /**
-         * 创建 buffer
-         */
-        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-
-        /**
-         * 循环读取服务器端响应信息
-         */
-        String response = "";
-        while (socketChannel.read(byteBuffer) > 0) {
-            /**
-             * 切换buffer为读模式
-             */
-            byteBuffer.flip();
-
-            /**
-             * 读取buffer中的内容
-             */
-            response += Charset.forName("UTF-8").decode(byteBuffer);
-        }
-
-        /**
-         * 将channel再次注册到selector上，监听他的可读事件
-         */
-        socketChannel.register(selector, SelectionKey.OP_READ);
-
-        /**
-         * 将服务器端响应信息打印到本地
-         */
-        if (response.length() > 0) {
-            System.out.println(response);
-        }
-    }
+  }
 }

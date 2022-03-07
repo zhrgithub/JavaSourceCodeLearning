@@ -11,64 +11,62 @@ import java.nio.channels.FileChannel;
  * @author LuoHaiYang
  */
 public class MappedByteBufferTest {
-    public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception {
 
-        RandomAccessFile randomAccessFile = new RandomAccessFile("/Users/zhr/Downloads/1.txt", "rw");
+    RandomAccessFile randomAccessFile = new RandomAccessFile("/Users/zhr/Downloads/1.txt", "rw");
 
-        // get channel
-        FileChannel channel = randomAccessFile.getChannel();
+    // get channel
+    FileChannel channel = randomAccessFile.getChannel();
 
-        MappedByteBuffer mappedByteBuffer = channel.map(FileChannel.MapMode.READ_WRITE, 0, 5);
+    MappedByteBuffer mappedByteBuffer = channel.map(FileChannel.MapMode.READ_WRITE, 0, 5);
 
-        mappedByteBuffer.put(0, (byte) 'H');
-        mappedByteBuffer.put(3, (byte) '9');
+    mappedByteBuffer.put(0, (byte) 'H');
+    mappedByteBuffer.put(3, (byte) '9');
 
-        // IndexOutOfBoundsException
-        mappedByteBuffer.put(4, (byte) 'Y');
+    // IndexOutOfBoundsException
+    mappedByteBuffer.put(4, (byte) 'Y');
 
-        randomAccessFile.close();
-        System.out.println("change success");
+    randomAccessFile.close();
+    System.out.println("change success");
+  }
+
+  /**
+   * @param from
+   * @param to
+   * @throws IOException
+   */
+  public static void mmap4zeroCopy(String from, String to) throws IOException {
+    FileChannel source = null;
+    FileChannel destination = null;
+    try {
+      source = new RandomAccessFile(from, "r").getChannel();
+      destination = new RandomAccessFile(to, "rw").getChannel();
+      MappedByteBuffer inMappedBuf = source.map(FileChannel.MapMode.READ_ONLY, 0, source.size());
+      destination.write(inMappedBuf);
+    } finally {
+      if (source != null) {
+        source.close();
+      }
+      if (destination != null) {
+        destination.close();
+      }
     }
+  }
 
-    /**
-     *
-     * @param from
-     * @param to
-     * @throws IOException
-     */
-    public static void mmap4zeroCopy(String from, String to) throws IOException {
-        FileChannel source = null;
-        FileChannel destination = null;
-        try {
-            source = new RandomAccessFile(from, "r").getChannel();
-            destination = new RandomAccessFile(to, "rw").getChannel();
-            MappedByteBuffer inMappedBuf =
-                    source.map(FileChannel.MapMode.READ_ONLY, 0, source.size());
-            destination.write(inMappedBuf);
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
-        }
+  public static void sendfile4zeroCopy(String from, String to) throws IOException {
+    FileChannel source = null;
+    FileChannel destination = null;
+    try {
+      source = new FileInputStream(from).getChannel();
+      destination = new FileOutputStream(to).getChannel();
+      source.transferTo(0, source.size(), destination);
+    } finally {
+      if (source != null) {
+        source.close();
+      }
+      if (destination != null) {
+        destination.close();
+      }
     }
-
-    public static void sendfile4zeroCopy(String from, String to) throws IOException{
-        FileChannel source = null;
-        FileChannel destination = null;
-        try {
-            source = new FileInputStream(from).getChannel();
-            destination = new FileOutputStream(to).getChannel();
-            source.transferTo(0, source.size(), destination);
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
-        }
-    }
+  }
 }

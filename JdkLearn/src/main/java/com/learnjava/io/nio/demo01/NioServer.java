@@ -13,60 +13,60 @@ import java.util.Iterator;
  * @date 2021/5/22
  */
 public class NioServer {
-    public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception {
 
-        // 绑定链接
-        Selector selector = Selector.open();
+    // 绑定链接
+    Selector selector = Selector.open();
 
-        // 获取服务端通道
-        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+    // 获取服务端通道
+    ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
-        serverSocketChannel.bind(new InetSocketAddress(9000));
+    serverSocketChannel.bind(new InetSocketAddress(9000));
 
-        // 切换为非阻塞模式
-        serverSocketChannel.configureBlocking(false);
+    // 切换为非阻塞模式
+    serverSocketChannel.configureBlocking(false);
 
-        // 将通道注册在selector上，并绑定为读事件
-        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+    // 将通道注册在selector上，并绑定为读事件
+    serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
-        // 选择器轮训，阻塞
-        for (;;) {
+    // 选择器轮训，阻塞
+    for (; ; ) {
 
-            int readyChannels = selector.select();
+      int readyChannels = selector.select();
 
-            System.out.println("进入");
+      System.out.println("进入");
 
-            if(readyChannels == 0) continue;
+      if (readyChannels == 0) continue;
 
-            Iterator<SelectionKey> it = selector.selectedKeys().iterator();
+      Iterator<SelectionKey> it = selector.selectedKeys().iterator();
 
-            // 判断是否有事件进来
-            while (it.hasNext()) {
-                // 获取就绪的事件
-                SelectionKey selectionKey = it.next();
+      // 判断是否有事件进来
+      while (it.hasNext()) {
+        // 获取就绪的事件
+        SelectionKey selectionKey = it.next();
 
-                // 读事件
-                if (selectionKey.isAcceptable()) {
-                    // 就绪的客户端连接事件
-                    SocketChannel acceptChannel = serverSocketChannel.accept();
-                    acceptChannel.configureBlocking(false);
-                    acceptChannel.register(selector, SelectionKey.OP_READ);
-                } else if (selectionKey.isReadable()) {
-                    // 读就绪事件
-                    SocketChannel readAcceptChannel = serverSocketChannel.accept();
-                    ByteBuffer allocateBuffer = ByteBuffer.allocate(1024);
+        // 读事件
+        if (selectionKey.isAcceptable()) {
+          // 就绪的客户端连接事件
+          SocketChannel acceptChannel = serverSocketChannel.accept();
+          acceptChannel.configureBlocking(false);
+          acceptChannel.register(selector, SelectionKey.OP_READ);
+        } else if (selectionKey.isReadable()) {
+          // 读就绪事件
+          SocketChannel readAcceptChannel = serverSocketChannel.accept();
+          ByteBuffer allocateBuffer = ByteBuffer.allocate(1024);
 
-                    int len = 0;
-                    while ((len = readAcceptChannel.read(allocateBuffer)) > 0) {
-                        allocateBuffer.flip();
-                        System.out.println(new String(allocateBuffer.array(), 0, len));
-                        allocateBuffer.clear();
-                    }
-                }
-            }
-
-            // 取消选择键selectionKey
-            it.remove();
+          int len = 0;
+          while ((len = readAcceptChannel.read(allocateBuffer)) > 0) {
+            allocateBuffer.flip();
+            System.out.println(new String(allocateBuffer.array(), 0, len));
+            allocateBuffer.clear();
+          }
         }
+      }
+
+      // 取消选择键selectionKey
+      it.remove();
     }
+  }
 }

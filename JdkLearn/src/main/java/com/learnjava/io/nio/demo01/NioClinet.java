@@ -13,31 +13,30 @@ import java.util.Scanner;
  */
 public class NioClinet {
 
-    public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception {
 
-        // 获取通道
-        SocketChannel channel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 9000));
+    // 获取通道
+    SocketChannel channel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 9000));
 
-        System.out.println("创建selector之前");
+    System.out.println("创建selector之前");
 
+    Selector selector = Selector.open();
+    // 切换至非阻塞模式
+    channel.configureBlocking(false);
 
-        Selector selector = Selector.open();
-        // 切换至非阻塞模式
-        channel.configureBlocking(false);
+    Scanner scan = new Scanner(System.in);
 
-        Scanner scan = new Scanner(System.in);
+    channel.register(selector, SelectionKey.OP_READ);
 
-        channel.register(selector, SelectionKey.OP_READ);
-
-        while (scan.hasNext()) {
-            String next = scan.nextLine();
-            // 向缓冲区里写入数据
-            if (next!=null&&next.length()>0){
-                channel.write(Charset.forName("UTF-8").encode(next));
-            }
-        }
-
-        // 关闭通道
-        channel.close();
+    while (scan.hasNext()) {
+      String next = scan.nextLine();
+      // 向缓冲区里写入数据
+      if (next != null && next.length() > 0) {
+        channel.write(Charset.forName("UTF-8").encode(next));
+      }
     }
+
+    // 关闭通道
+    channel.close();
+  }
 }
