@@ -1,7 +1,6 @@
 package com.learnjava.io.netty.timeServer;
 
 import com.learnjava.io.netty.timeServer.channel.TimeServerHandler;
-import com.learnjava.io.netty.timeServer.util.TimeEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -53,7 +52,7 @@ public class TimeServer {
                   // ChannelInboundHandlerAdapter 用于处理入站 I/O 事件。ChannelOutboundHandlerAdapter 用于处理出站
                   // I/O 操作。
                   // ChannelDuplexHandler 用于处理入站和出站事件。
-                  ch.pipeline().addLast(new TimeServerHandler());
+                  ch.pipeline().addLast("1", new TimeServerHandler());
                 }
               })
           // 设置服务端管道的连接配置参数，根据名称返回对应的操作类型，并且设置对应的属性值
