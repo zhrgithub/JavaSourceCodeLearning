@@ -13,6 +13,7 @@ public class TimeEncoder extends MessageToByteEncoder<UnixTime> {
 
   @Override
   protected void encode(ChannelHandlerContext ctx, UnixTime msg, ByteBuf out) throws Exception {
+    System.out.println("编码成功");
     out.writeInt((int) msg.value());
   }
 }
