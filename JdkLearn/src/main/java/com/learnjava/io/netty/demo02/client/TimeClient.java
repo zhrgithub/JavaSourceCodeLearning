@@ -1,6 +1,7 @@
 package com.learnjava.io.netty.demo02.client;
 
 import com.learnjava.io.netty.demo02.channel.TimeClientHandler;
+import com.learnjava.io.netty.demo02.util.TimeDecoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -28,7 +29,7 @@ public class TimeClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new TimeClientHandler());
+                    ch.pipeline().addLast(new TimeDecoder(),new TimeClientHandler());
                 }
             });
 
