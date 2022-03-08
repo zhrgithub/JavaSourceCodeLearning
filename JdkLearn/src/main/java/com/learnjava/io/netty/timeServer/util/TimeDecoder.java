@@ -1,4 +1,4 @@
-package com.learnjava.io.netty.demo02.util;
+package com.learnjava.io.netty.timeServer.util;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

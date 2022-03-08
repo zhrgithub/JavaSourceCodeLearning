@@ -1,6 +1,6 @@
-package com.learnjava.io.netty.demo01;
+package com.learnjava.io.netty.discardServer;
 
-import com.learnjava.io.netty.demo01.channel.MyChannelInboundHandlerAdapter;
+import com.learnjava.io.netty.discardServer.channel.MyChannelInboundHandlerAdapter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

@@ -1,7 +1,7 @@
-package com.learnjava.io.netty.demo02.client;
+package com.learnjava.io.netty.timeServer;
 
-import com.learnjava.io.netty.demo02.channel.TimeClientHandler;
-import com.learnjava.io.netty.demo02.util.TimeDecoder;
+import com.learnjava.io.netty.timeServer.channel.TimeClientHandler;
+import com.learnjava.io.netty.timeServer.util.TimeDecoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

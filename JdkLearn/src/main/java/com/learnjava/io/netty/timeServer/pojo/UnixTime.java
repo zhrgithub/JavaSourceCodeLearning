@@ -1,4 +1,4 @@
-package com.learnjava.io.netty.demo02.pojo;
+package com.learnjava.io.netty.timeServer.pojo;
 
 import java.util.Date;
 

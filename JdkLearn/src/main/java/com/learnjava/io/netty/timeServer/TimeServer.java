@@ -1,6 +1,6 @@
-package com.learnjava.io.netty.demo02.client;
+package com.learnjava.io.netty.timeServer;
 
-import com.learnjava.io.netty.demo02.channel.TimeServerHandler;
+import com.learnjava.io.netty.timeServer.channel.TimeServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

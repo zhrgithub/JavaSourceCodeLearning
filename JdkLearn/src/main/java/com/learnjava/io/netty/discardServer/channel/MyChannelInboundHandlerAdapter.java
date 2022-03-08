@@ -1,4 +1,4 @@
-package com.learnjava.io.netty.demo01.channel;
+package com.learnjava.io.netty.discardServer.channel;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
