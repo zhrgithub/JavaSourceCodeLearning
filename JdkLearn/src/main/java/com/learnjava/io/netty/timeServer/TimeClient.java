@@ -2,6 +2,8 @@ package com.learnjava.io.netty.timeServer;
 
 import com.learnjava.io.netty.timeServer.channel.TimeClientHandler;
 import com.learnjava.io.netty.timeServer.util.TimeDecoder;
+import com.learnjava.io.netty.timeServer.util.TimeDecoderThree;
+import com.learnjava.io.netty.timeServer.util.TimeEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -29,7 +31,7 @@ public class TimeClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new TimeDecoder(),new TimeClientHandler());
+                    ch.pipeline().addLast(new TimeDecoderThree(),new TimeClientHandler());
                 }
             });
 
