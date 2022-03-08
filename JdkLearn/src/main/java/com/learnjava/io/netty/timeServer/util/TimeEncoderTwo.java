@@ -18,6 +18,7 @@ public class TimeEncoderTwo extends ChannelOutboundHandlerAdapter {
         UnixTime m = (UnixTime) msg;
         ByteBuf encoded = ctx.alloc().buffer(4);
         encoded.writeInt((int)m.value());
+        System.out.println("编码成功！！！");
         ctx.write(encoded, promise); // (1)
     }
 
