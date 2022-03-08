@@ -18,20 +18,24 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
   @Override
   public void channelActive(final ChannelHandlerContext ctx) { // (1)建立连接并准备好生成流量，写一个表示当前时间的 32 位整数。
         final ByteBuf time = ctx.alloc().buffer(4); // (2)开辟4个字节的缓存
-//        time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
-//
-//        final ChannelFuture f =
-//            ctx.writeAndFlush(time); // (3)写入管道并刷新，netty不需要ByteBuffer.flip()，因为netty对不同的操作类型有不同的指针
-//        f.addListener(future -> {
-//                assert f == future;
-//                System.out.println("操作成功");
-//                ctx.close();
-//            }); // (4)添加发送信息的监听事件，如果f与future相等表示发送成功
-
+    //        time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
+    //
+    //        final ChannelFuture f =
+    //            ctx.writeAndFlush(time); //
+    // (3)写入管道并刷新，netty不需要ByteBuffer.flip()，因为netty对不同的操作类型有不同的指针
+    //        f.addListener(future -> {
+    //                assert f == future;
+    //                System.out.println("操作成功");
+    //                ctx.close();
+    //            }); // (4)添加发送信息的监听事件，如果f与future相等表示发送成功
     UnixTime unixTime = new UnixTime();
     time.writeInt((int) unixTime.value());
     ChannelFuture f = ctx.writeAndFlush(time);
-    f.addListener(ChannelFutureListener.CLOSE);
+    f.addListener(
+        future -> {
+          assert future == f;
+          System.out.println("服务器响应成功！！！");
+        });
   }
 
   @Override

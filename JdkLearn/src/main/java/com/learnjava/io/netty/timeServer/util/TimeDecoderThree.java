@@ -15,6 +15,8 @@ public class TimeDecoderThree extends ReplayingDecoder {
 
   @Override
   protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+
+//    System.out.println("解码器收到的数据："+in.readUnsignedInt());
     if (in.readableBytes() < 4) {
       return;
     }

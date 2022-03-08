@@ -4,6 +4,7 @@ import com.learnjava.io.netty.timeServer.channel.TimeServerHandler;
 import com.learnjava.io.netty.timeServer.util.TimeDecoder;
 import com.learnjava.io.netty.timeServer.util.TimeDecoderThree;
 import com.learnjava.io.netty.timeServer.util.TimeEncoder;
+import com.learnjava.io.netty.timeServer.util.TimeEncoderTwo;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -56,7 +57,7 @@ public class TimeServer {
                   // I/O 操作。
                   // ChannelDuplexHandler 用于处理入站和出站事件。
 //                  ch.pipeline().addLast("decode", new TimeDecoderThree());
-//                  ch.pipeline().addLast("encoder", new TimeEncoder());
+                  ch.pipeline().addLast("encoder", new TimeEncoder());
                   ch.pipeline().addLast("handler", new TimeServerHandler());
                 }
               })

@@ -31,6 +31,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
   @Override
   public void channelRead(ChannelHandlerContext ctx, Object msg) {
+    System.out.println("客户端读取：");
     //    ByteBuf m = (ByteBuf) msg; // (1)在 TCP/IP 中，Netty 将从对等端发送的数据读取到ByteBuf.
     //
     //    buf.writeBytes(m); // (2)
