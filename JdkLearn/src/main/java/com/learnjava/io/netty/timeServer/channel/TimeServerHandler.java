@@ -2,9 +2,13 @@ package com.learnjava.io.netty.timeServer.channel;
 
 import com.learnjava.io.netty.timeServer.pojo.UnixTime;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
  * @author zhr_java@163.com
@@ -14,9 +18,14 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class TimeServerHandler extends ChannelInboundHandlerAdapter {
 
+  //可以将所有的客户端连接管道存入管道集合中
+  public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
   @Override
   public void channelActive(final ChannelHandlerContext ctx) { // (1)建立连接并准备好生成流量，写一个表示当前时间的 32 位整数。
-        final ByteBuf time = ctx.alloc().buffer(4); // (2)开辟4个字节的缓存
+    Channel channel = ctx.channel();
+    channels.add(channel);
+    final ByteBuf time = ctx.alloc().buffer(4); // (2)开辟4个字节的缓存
     //        time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
     //
     //        final ChannelFuture f =
