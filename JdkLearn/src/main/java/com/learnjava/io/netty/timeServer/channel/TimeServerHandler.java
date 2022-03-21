@@ -18,7 +18,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
  */
 public class TimeServerHandler extends ChannelInboundHandlerAdapter {
 
-  //可以将所有的客户端连接管道存入管道集合中
+  // 可以将所有的客户端连接管道存入管道集合中
   public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
   @Override
