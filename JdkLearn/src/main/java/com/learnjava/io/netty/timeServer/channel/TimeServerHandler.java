@@ -25,7 +25,8 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
   public void channelActive(final ChannelHandlerContext ctx) { // (1)建立连接并准备好生成流量，写一个表示当前时间的 32 位整数。
     Channel channel = ctx.channel();
     channels.add(channel);
-    final ByteBuf time = ctx.alloc().buffer(4); // (2)开辟4个字节的缓存
+    // (2)开辟4个字节的缓存
+    final ByteBuf time = ctx.alloc().buffer(4);
     //        time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
     //
     //        final ChannelFuture f =
