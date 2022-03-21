@@ -48,7 +48,9 @@ public class NioServer {
       int readyChannels = selector.select();
 
       /** TODO 如果获取到的管道是0，那么跳过本次循环 */
-      if (readyChannels == 0) continue;
+      if (readyChannels == 0) {
+        continue;
+      }
       System.out.println("进入");
 
       /** 获取可用channel的集合 */
