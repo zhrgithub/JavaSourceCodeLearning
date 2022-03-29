@@ -14,6 +14,7 @@ public class MyInvocationHandler implements InvocationHandler {
     /**
      * 执行目标对象的方法
      */
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("---------------------------------方法purchase购买前，代理人吃回扣了----------------------------");
         //执行目标对象的方法
